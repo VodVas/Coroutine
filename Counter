@@ -1,0 +1,39 @@
+using System.Collections;
+using UnityEngine;
+
+public class Counter : MonoBehaviour
+{
+    private float _delay = 0.5f;
+    private int _count = 0;
+    private int _mouseButtonNumber = 0;
+    private bool _counting = false;
+
+    private void Start()
+    {
+        StartCoroutine(Ticker());
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(_mouseButtonNumber))
+        {
+            _counting = !_counting;
+        }
+    }
+
+    private IEnumerator Ticker()
+    {
+        var wait = new WaitForSeconds(_delay);
+
+        while (true)
+        {
+            if (_counting)
+            {
+                _count++;
+                Debug.Log("Счетчик: " + _count);
+            }
+
+            yield return wait;
+        }
+    }
+}
