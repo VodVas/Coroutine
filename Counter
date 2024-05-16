@@ -6,18 +6,25 @@ public class Counter : MonoBehaviour
     private float _delay = 0.5f;
     private int _count = 0;
     private int _mouseButtonNumber = 0;
-    private bool _counting = false;
+    private bool _isRun = true;
 
-    private void Start()
-    {
-        StartCoroutine(Ticker());
-    }
+    private Coroutine _coroutine;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(_mouseButtonNumber))
         {
-            _counting = !_counting;
+            if (_isRun == false)
+            {
+                _coroutine = StartCoroutine(Ticker());
+
+                _isRun = true;
+            }
+            else
+            {
+                _isRun = false;
+                StopCoroutine(_coroutine);
+            }
         }
     }
 
@@ -27,11 +34,8 @@ public class Counter : MonoBehaviour
 
         while (true)
         {
-            if (_counting)
-            {
-                _count++;
-                Debug.Log("Счетчик: " + _count);
-            }
+            _count++;
+            Debug.Log("Счетчик: " + _count);
 
             yield return wait;
         }
