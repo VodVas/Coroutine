@@ -20,9 +20,10 @@ public class Counter : MonoBehaviour
 
                 _isRun = true;
             }
-            else
+            else if (_isRun == true)
             {
                 _isRun = false;
+
                 StopCoroutine(_coroutine);
             }
         }
